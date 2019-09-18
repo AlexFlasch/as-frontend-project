@@ -1,32 +1,56 @@
-import { takeLatest, put, call, select } from 'redux-saga/effects';
+import { takeLatest, put, call, select, all } from 'redux-saga/effects';
 
 import { USERS_FETCH_REQUESTED } from './action-types';
 import { fetchUsersSuccess, fetchUsersFail } from './actions';
 import { getMoreUsersToken } from './selectors';
 
-import { fetchUsers } from '../api';
+import { fetchUsersListPage, fetchUserDetails } from '../api';
 
 function* initializeApp() {
   yield call(fetchUsersSaga);
 }
 
-function* fetchUsersSaga() {
-  const moreUsersToken = yield select(getMoreUsersToken);
-
+function* fetchUsersListPageSaga(token) {
   const queryParams = [];
-  if (moreUsersToken) {
-    queryParams.push({ token: moreUsersToken });
+  if (token) {
+    queryParams.push({ token });
   }
 
   try {
-    const users = yield call(fetchUsers, queryParams);
+    const usersListPage = yield call(fetchUsersListPage, queryParams);
 
-    yield put(fetchUsersSuccess(users));
+    return usersListPage;
   } catch (error) {
-    yield console.log(error);
-
     yield put(fetchUsersFail(error));
   }
+}
+
+function* fetchUserDetailsSaga(userId) {
+  try {
+    const userDetails = yield call(fetchUserDetails, userId);
+
+    return userDetails;
+  } catch (error) {
+    yield put(fetchUsersFail(error));
+  }
+}
+
+function* fetchUsersSaga() {
+  const currentToken = yield select(getMoreUsersToken);
+
+  const { result: userIds, token } = yield call(
+    fetchUsersListPageSaga,
+    currentToken,
+  );
+
+  // grab details for every user after we've gotten a list of Ids
+  const users = yield all(
+    userIds.map(userId => call(fetchUserDetailsSaga, userId)),
+  );
+
+  console.log('users: ', users);
+
+  yield put(fetchUsersSuccess({ users, token }));
 }
 
 export default function* rootSaga() {

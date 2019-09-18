@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import posed from 'react-pose';
 
 import {
@@ -77,6 +78,14 @@ const Loader = props => {
       </StyledLoader>
     </FadeTransition>
   );
+};
+
+Loader.defaultProps = {
+  visible: true,
+};
+
+Loader.propTypes = {
+  visible: PropTypes.bool,
 };
 
 export default Loader;

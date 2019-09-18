@@ -7,7 +7,7 @@ import {
 
 const INITIAL_STATE = {
   searchTerm: '',
-  fetchedUsers: [],
+  users: [],
   moreUsersToken: undefined,
   isLoaderActive: true, // users will be fetched on page load, so start with loader active
   errors: {
@@ -30,7 +30,7 @@ export default (state = INITIAL_STATE, action) => {
     case USERS_FETCH_SUCCEEDED:
       return {
         ...state,
-        users: action.payload.result,
+        users: action.payload.users,
         moreUsersToken: action.payload.token,
         isLoaderActive: false,
         errors: {

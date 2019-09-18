@@ -13,7 +13,7 @@ const constructQueryParamString = (queryParams = []) =>
     return `${acc}${joinChar}${paramName}=${paramValue}`;
   }, '');
 
-export const fetchUsers = async queryParams => {
+export const fetchUsersListPage = async queryParams => {
   const endpoint = 'list';
   const queryParamString = constructQueryParamString(queryParams);
   const requestUrl = `${API_URL}${endpoint}${queryParamString}`;
@@ -24,5 +24,18 @@ export const fetchUsers = async queryParams => {
     return await response.json();
   } else {
     throw new Error('An error occurred while getting users.');
+  }
+};
+
+export const fetchUserDetails = async userId => {
+  const endpoint = 'detail';
+  const requestUrl = `${API_URL}${endpoint}/${userId}`;
+
+  const response = await fetch(requestUrl);
+
+  if (response.ok) {
+    return await response.json();
+  } else {
+    throw new Error("An error occurred while getting a user's details.");
   }
 };

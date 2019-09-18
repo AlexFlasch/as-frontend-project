@@ -5,6 +5,7 @@ import { getLoaderState } from './store/selectors';
 
 import Loader from './components/Loader';
 import SearchInput from './components/SearchInput';
+import UserList from './components/UserList';
 
 const App = props => {
   const isLoaderActive = useSelector(getLoaderState);
@@ -13,6 +14,7 @@ const App = props => {
     <div className="App">
       <Loader visible={isLoaderActive} />
       <SearchInput />
+      <UserList visible={!isLoaderActive} />
     </div>
   );
 };
