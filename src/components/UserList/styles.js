@@ -6,6 +6,10 @@ export const StyledUserList = styled.div`
   align-items: center;
   flex-direction: column;
 
-  width: 100vw;
+  width: 100%;
   min-width: 300px;
+
+  & > ul {
+    list-style: none;
+  }
 `;

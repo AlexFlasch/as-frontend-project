@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import posed from 'react-pose';
+import posed, { PoseGroup } from 'react-pose';
 
 import {
   StyledLoader,
@@ -62,21 +62,22 @@ const SpinnerSvg = () => (
 );
 
 const FadeTransition = posed.div({
-  hidden: { opacity: 0, ease: 'easeInOut' },
-  visible: { opacity: 1, ease: 'easeInOut' },
+  exit: { opacity: 0, ease: 'easeInOut' },
+  enter: { opacity: 1, ease: 'easeInOut' },
 });
 
 const Loader = props => {
   return (
-    <FadeTransition
-      initialPose="hidden"
-      pose={props.visible ? 'visible' : 'hidden'}
-    >
-      <StyledLoader>
-        <SpinnerSvg />
-        <span>Loading...</span>
-      </StyledLoader>
-    </FadeTransition>
+    <PoseGroup enterPose="enter" exitPose="exit">
+      {props.visible && (
+        <FadeTransition key="loader" initialPose="hidden">
+          <StyledLoader>
+            <SpinnerSvg />
+            <span>Loading...</span>
+          </StyledLoader>
+        </FadeTransition>
+      )}
+    </PoseGroup>
   );
 };
 

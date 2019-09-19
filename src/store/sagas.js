@@ -31,7 +31,8 @@ function* fetchUserDetailsSaga(userId) {
 
     return userDetails;
   } catch (error) {
-    yield put(fetchUsersFail(error));
+    // in case of failure to fetch user details, return undefined to avoid adding bad data to the user array
+    return undefined;
   }
 }
 
@@ -44,11 +45,11 @@ function* fetchUsersSaga() {
   );
 
   // grab details for every user after we've gotten a list of Ids
-  const users = yield all(
+  let users = yield all(
     userIds.map(userId => call(fetchUserDetailsSaga, userId)),
   );
 
-  console.log('users: ', users);
+  users = users.filter(user => user !== undefined);
 
   yield put(fetchUsersSuccess({ users, token }));
 }

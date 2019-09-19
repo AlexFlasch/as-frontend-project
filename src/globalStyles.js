@@ -15,8 +15,9 @@ export default createGlobalStyle`
   }
 
   body {
-    width: 100vw;
+    width: calc(100vw - 50px);
     height: 100vh;
+    margin: 0 25px;
 
     background-color: ${palette.bodyBackground};
   }

@@ -9,42 +9,57 @@ import { StyledUserList } from './styles';
 
 import UserCard from '../UserCard';
 
-const UserPoseGroup = posed.ul({
-  hidden: {
-    staggerChildren: 333,
+const PosedUserList = posed.ul({
+  enter: {
+    delay: 500,
+    delayChildren: 100,
+    staggerChildren: 100,
   },
-  visible: {
-    staggerChildren: 333,
+  exit: {
+    delayChildren: 100,
+    staggerChildren: 100,
   },
 });
 
 const UserItem = posed.li({
-  hidden: {
+  preEnter: {
     opacity: 0,
-    y: 15,
-    damping: 15,
+    y: -15,
+    easing: 'easeInOut',
   },
-  viisble: {
+  enter: {
     opacity: 1,
     y: 0,
-    damping: 15,
+    easing: 'easeInOut',
+  },
+  exit: {
+    opacity: 0,
+    y: -15,
+    easing: 'easeInOut',
   },
 });
 
 const UserList = props => {
   const users = useSelector(getUsers);
 
-  return (
+  return users.length ? (
     <StyledUserList>
-      <UserPoseGroup pose={props.visible ? 'visible' : 'hidden'}>
-        {users.map(user => (
-          <UserItem key={user.id}>
-            <UserCard user={user} />
-          </UserItem>
-        ))}
-      </UserPoseGroup>
+      <PoseGroup enterPose="enter" exitPose="exit" animateOnMount={true}>
+        {props.visible && (
+          <PosedUserList
+            key="user-list"
+            pose={props.visible ? 'visible' : 'hidden'}
+          >
+            {users.map(user => (
+              <UserItem key={user.id} preEnterPose="preEnter" enterPose="enter">
+                <UserCard user={user} />
+              </UserItem>
+            ))}
+          </PosedUserList>
+        )}
+      </PoseGroup>
     </StyledUserList>
-  );
+  ) : null;
 };
 
 UserList.defaultProps = {

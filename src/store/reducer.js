@@ -30,7 +30,7 @@ export default (state = INITIAL_STATE, action) => {
     case USERS_FETCH_SUCCEEDED:
       return {
         ...state,
-        users: action.payload.users,
+        users: [...state.users, ...action.payload.users],
         moreUsersToken: action.payload.token,
         isLoaderActive: false,
         errors: {
