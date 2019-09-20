@@ -2,6 +2,7 @@ import { css } from 'styled-components';
 
 import palette from '../constants/palette';
 
+// the base gradient shadow effect in css
 const baseShadow = css`
   content: '';
   position: absolute;
@@ -16,6 +17,7 @@ const baseShadow = css`
   background: ${palette.accentGradient};
 `;
 
+// transition some of the gradient shadow properties on hover
 const hoverStyles = css`
   &:hover::after,
   &.hovered::after {
@@ -27,6 +29,7 @@ const hoverStyles = css`
   }
 `;
 
+// transition some of the gradient shadow properties on focus or active states
 const activeStyles = css`
   &:active::after,
   &:focus::after,
@@ -41,6 +44,8 @@ const activeStyles = css`
   }
 `;
 
+// allow specifying whether you'd like the hover and active effects present where the mixin is used,
+// and then return the CSS tagged template literal to be used as a mixin accordingly
 export default (hasHover = true, hasActive = true) => css`
   position: relative;
 

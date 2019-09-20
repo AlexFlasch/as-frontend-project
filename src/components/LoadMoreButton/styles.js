@@ -25,7 +25,10 @@ export const StyledLoadMoreButton = styled.button`
   transition-duration: 0.3s;
   transition-timing-function: ease-in-out;
 
-  /* before element to help us give the illusion of a gradient transition */
+  /*
+    before element to help us give the illusion of a gradient transition
+    since those aren't possible with CSS :(
+  */
   &::before {
     content: '${props => props.children}';
     position: absolute;

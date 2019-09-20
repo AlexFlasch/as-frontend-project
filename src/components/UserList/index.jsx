@@ -9,6 +9,8 @@ import { StyledUserList } from './styles';
 
 import UserCard from '../UserCard';
 
+// these settings give the user list that nice staggered pop-in effect when the
+// page is first loaded, as well as the extra users you load if you scroll quickly enough
 const PosedUserList = posed.ul({
   enter: {
     delay: 500,
@@ -21,6 +23,8 @@ const PosedUserList = posed.ul({
   },
 });
 
+// these settings allow the user cards to have that nice sliding effect
+// when the user searches for and filters out some of the user cards
 const UserItem = posed.li({
   preEnter: {
     opacity: 0,

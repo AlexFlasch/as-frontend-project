@@ -12,6 +12,8 @@ const swatches = {
   transparentAccentPurple: '#B030B077',
 };
 
+// keep an object with our color palette and some frequently used bits of CSS to help keep consistent around the app
+// (The CSS should be moved to use styled-component's css tagged template literals if this app were to grow)
 export default {
   ...swatches,
   text: swatches.purple1,

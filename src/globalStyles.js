@@ -15,6 +15,10 @@ export default createGlobalStyle`
   }
 
   body {
+    /*
+      whole screen minus some space to account for a vertical scrollbar
+      in order to avoid having a horizontal scrollbar
+    */
     width: calc(100vw - 50px);
     height: 100vh;
     margin: 0 25px;

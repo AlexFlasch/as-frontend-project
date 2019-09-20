@@ -12,6 +12,8 @@ function* initializeApp() {
 
 function* fetchUsersListPageSaga(token) {
   const queryParams = [];
+
+  // don't send a token query param if we have no token to send
   if (token) {
     queryParams.push({ token });
   }
@@ -49,8 +51,10 @@ function* fetchUsersSaga() {
     userIds.map(userId => call(fetchUserDetailsSaga, userId)),
   );
 
+  // filter out any failed user details fetches
   users = users.filter(user => user !== undefined);
 
+  // send our newly fetched users, as well as the new token to the redux store
   yield put(fetchUsersSuccess({ users, token }));
 }
 
@@ -58,5 +62,7 @@ export default function* rootSaga() {
   // run API calls, and any other required initialization steps
   yield call(initializeApp);
 
+  // this won't run by default when this saga is called from the createStore function
+  // this will only run fetchUsersSaga when redux-saga sees the USERS_FETCH_REQUESTED action fired
   yield takeLatest(USERS_FETCH_REQUESTED, fetchUsersSaga);
 }
