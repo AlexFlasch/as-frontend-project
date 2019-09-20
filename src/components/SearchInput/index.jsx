@@ -8,6 +8,7 @@ import { StyledSearchHeader, StyledSearchInput } from './styles';
 const SearchInput = props => {
   const dispatch = useDispatch();
 
+  // the onChange should really be throttled to prevent mutating the redux state too quickly
   return (
     <StyledSearchHeader>
       <StyledSearchInput
