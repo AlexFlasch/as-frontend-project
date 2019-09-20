@@ -1,3 +1,11 @@
+## Testing Strategy
+
+Ideally this app would be supported by something like `jest` or `@testing-library/react` as well as component snapshots through `enzyme`. I would probably choose `@testing-library/react` as this app makes heavy use of hooks which can be difficult to test using `jest`. Though there are no custom hooks here which should make accomodating `jest` easier for now.
+
+Additionally I would also like to see some form of integration or E2E testing with something like Selenium or Cypress. These have been invaluable for my current and past small teams for preventing regressions as well as being able to test whole workflows instead of just individual components.
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
